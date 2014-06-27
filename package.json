@@ -5,7 +5,7 @@
         "nodecastor": "*",
         "lodash": "*",
         "winston": "*",
-        "nodecast": "*",
+        "nodecast": "screencloud/nodecast",
         "restify": "*",
         "coffee-script": "*",
         "nodemon": "*"
