@@ -17,13 +17,18 @@ var appNS = 'urn:x-cast:io.screencloud.cast.player';
 
 var dump = function(obj){return util.inspect(obj, false, null); };
 
+var devices = {};
+var _devices = {}; 
+
 // dashkioskNs = 'urn:x-cast:com.deezer.cast.dashkiosk';
 
-function startApp(device, appId, appNS){
+function startApp(deviceId, appId, appNS, callback){
+  var device = _devices[deviceId];
 	device.application(appId, function(err, app) {
     if (err) {
       logger.error('Unable to find application', err);
-      notRunning();
+      // notRunning();
+      callback({'status':'error', 'message': 'unable to find application'});
       return;
     }
     // app.run(); 
@@ -34,9 +39,11 @@ function startApp(device, appId, appNS){
       	logger.info(dump(err)); 
         logger.error('Unable to open channel '+appNS, err);
         // notRunning();
+        callback({'status':'error', 'message': 'unable to open channel'});
         return;
       }
       session.send({uuid: device.id})
+      callback({'status': 'running', 'message': 'app started'});
     //   // var token = scs.encode(JSON.stringify({
     //   //   name: display.toJSON().name
     //   // })),
@@ -47,6 +54,8 @@ function startApp(device, appId, appNS){
   });
 }
 
+
+
 function checkStatus(device) {
   device.status(function(err, status) {
     if (err) {
@@ -54,8 +63,10 @@ function checkStatus(device) {
       return;
     }
     logger.info('Device '+device+' status: '+status); 
+    logger.info('adding device with id: '+ device.id)
+    devices[device.id]['status'] = status; 
     // update(device, status);
-    startApp(device, appId, appNS); 
+    // startApp(device, appId, appNS); 
   });
 }
 
@@ -63,17 +74,20 @@ function update(device, status){
 	logger.info('Update '+device+' status ', status); 
 }
 
-var devices = {};
-
 scanner
   .on('online', function(device) {
-    var sdev = _.pick(device, [ 'address', 'port', 'id', 'friendlyName' ]);
-    logger.info('New Chromecast device discovered', sdev);
+    var info = _.pick(device, [ 'address', 'port', 'id', 'friendlyName' ]);
+    info.type = 'chromecast'
+    info.protocol = 'x-cast'
+    logger.info('New Chromecast device discovered', info);
     // logger.info(dump(device)); 
 
     // On connect, check status and update if needed
     device
       .on('connect', function() {
+        devices[device.id] = {}
+        devices[device.id]['info'] = info;
+        _devices[device.id] = device
         device.on('status', function(status) {
         	//logger.info(dump(status)); 
           update(device, status);
@@ -108,3 +122,6 @@ scanner
     logger.warn('Got some mDNS error. Let\'s ignore it.', err.message);
   })
   .start();
+
+module.exports.devices = devices; 
+module.exports.startApp = startApp; 

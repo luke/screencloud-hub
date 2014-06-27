@@ -1,10 +1,16 @@
 {
-    "name": "screencloud-node-agent",
+    "name": "screencloud-hub",
     "version": "0.0.0-unreleasable",
     "dependencies": {
         "nodecastor": "*",
         "lodash": "*",
         "winston": "*",
-        "nodecast": "*"
+        "nodecast": "*",
+        "restify": "*",
+        "coffee-script": "*",
+        "nodemon": "*"
+    },
+    "scripts": {
+        "start": "nodemon app.coffee"
     }
 }
