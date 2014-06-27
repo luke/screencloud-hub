@@ -2,6 +2,7 @@
 
 var nodecast = require('nodecast');
 var stream = nodecast.find();
+var md5 = require('MD5');
 
 // console.log('+++++++++++++++++++++++++++++++++++++++++++++');
 
@@ -11,16 +12,16 @@ var devices = {}
 stream.on('device', function(device) {
 	// device.name, 
 
-  var deviceId = device.info.UDN; 
+  var deviceId = md5(device.info.UDN);
 
   _devices[deviceId] = device; 
   devices[deviceId] = {}
   devices[deviceId]['info'] = device.info; 
-  devices[deviceId]['info']['id'] = device.info.UDN
+  devices[deviceId]['info']['id'] = deviceId; 
   devices[deviceId]['status'] = {}
 
-  console.log('Found', device.info.manufacturer, device.info.modelName, device.info.UDN);//,  device.info);
-  console.log(device.info); 
+  //console.log('Found', device.info.manufacturer, device.info.modelName, device.info.UDN);//,  device.info);
+  //console.log(device.info); 
   // console.log('device: %j', device); 
   // console.log('----------------------------------------------'); 
   if (typeof device.apps === 'function') {

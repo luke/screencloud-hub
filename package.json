@@ -8,7 +8,10 @@
         "nodecast": "screencloud/nodecast",
         "restify": "*",
         "coffee-script": "*",
-        "nodemon": "*"
+        "nodemon": "*",
+        "MD5": "*",
+        "faye-websocket": "*",
+        "sockjs-client": "sockjs/sockjs-client-node"
     },
     "scripts": {
         "start": "nodemon app.coffee"

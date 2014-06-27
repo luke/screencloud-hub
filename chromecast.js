@@ -77,9 +77,10 @@ function update(device, status){
 scanner
   .on('online', function(device) {
     var info = _.pick(device, [ 'address', 'port', 'id', 'friendlyName' ]);
-    info.type = 'chromecast'
-    info.protocol = 'x-cast'
-    logger.info('New Chromecast device discovered', info);
+    info.deviceType = 'urn:x-cast'
+    info.manufacturer = 'Google Inc.'
+    info.modelName = 'Eureka Dongle'
+    // logger.info('New Chromecast device discovered', info);
     // logger.info(dump(device)); 
 
     // On connect, check status and update if needed
