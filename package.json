@@ -1,0 +1,10 @@
+{
+    "name": "screencloud-node-agent",
+    "version": "0.0.0-unreleasable",
+    "dependencies": {
+        "nodecastor": "*",
+        "lodash": "*",
+        "winston": "*",
+        "nodecast": "*"
+    }
+}
