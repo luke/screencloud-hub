@@ -4,12 +4,7 @@ var _ = require('lodash');
 var logger = require('winston');
 var util = require('util');
 
-var scanner = nodecastor.scan({   logger: logger, 
-								  timeout: 20000,
-                                  reconnect: {
-                                    maxRetries: Infinity
-                                  }
-                                });
+var scanner = nodecastor.scan({ logger: logger, timeout: 20000, reconnect: { maxRetries: Infinity } });
 
 var homeId = '00000000-0000-0000-0000-000000000000'; 
 var appId = '765FFE19'; 
