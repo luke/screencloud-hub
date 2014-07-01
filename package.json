@@ -11,7 +11,10 @@
         "nodemon": "*",
         "MD5": "*",
         "faye-websocket": "*",
-        "sockjs-client": "sockjs/sockjs-client-node"
+        "sockjs-client": "sockjs/sockjs-client-node",
+        "castv2": "*",
+        "castv2-client": "*",
+        "mdns": "*"
     },
     "scripts": {
         "start": "nodemon app.coffee"
