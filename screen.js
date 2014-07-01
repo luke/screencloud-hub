@@ -57,12 +57,13 @@ function startApp(host) {
     connection.send({ type: 'CONNECT' });
 
     // launch app
-    receiver.send({ type: 'LAUNCH', appId: appId, requestId: 1 });
+    // receiver.send({ type: 'LAUNCH', appId: 'CC1AD845', requestId: 1});
+    receiver.send({ type: 'LAUNCH', appId: '765FFE19', requestId: 1});
 
     //display receiver status updates
     receiver.on('message', function(data, broadcast) {
 
-      console.log(data.type);
+      //console.log(data.status);
 
       if(data.type = 'RECEIVER_STATUS') {
         console.log(data.status);
@@ -73,10 +74,10 @@ function startApp(host) {
 
 }
 
-//scanDevice();
+scanDevice();
 
-var ipTarget = '192.168.10.44'; // for test chromecast one
-// var ipTarget = '192.168.10.48'; // for test chromecast two
+var ipTarget = '192.168.10.24'; // for test chromecast one
+// var ipTarget = '192.168.10.46'; // for test chromecast two
 
 startApp(ipTarget);
 
