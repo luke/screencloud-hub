@@ -64,7 +64,8 @@ function checkStatus(device) {
     }
     logger.info('Device '+device+' status: '+status); 
     logger.info('adding device with id: '+ device.id)
-    devices[device.id]['status'] = status; 
+    devices[device.id]['status'] = status;
+
     // update(device, status);
     // startApp(device, appId, appNS); 
   });
@@ -79,7 +80,7 @@ scanner
     var info = _.pick(device, [ 'address', 'port', 'id', 'friendlyName' ]);
     info.deviceType = 'urn:x-cast'
     info.manufacturer = 'Google Inc.'
-    info.modelName = 'Eureka Dongle'
+    info.modelName = 'Chromecast'
     // logger.info('New Chromecast device discovered', info);
     // logger.info(dump(device)); 
 

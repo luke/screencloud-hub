@@ -18,6 +18,9 @@ stream.on('device', function(device) {
   devices[deviceId] = {}
   devices[deviceId]['info'] = device.info; 
   devices[deviceId]['info']['id'] = deviceId; 
+  devices[deviceId]['info']['port'] = parseInt(device.port)
+  devices[deviceId]['info']['address'] = device.address
+  devices[deviceId]['info']['name'] = device.name
   devices[deviceId]['status'] = {}
 
   //console.log('Found', device.info.manufacturer, device.info.modelName, device.info.UDN);//,  device.info);
