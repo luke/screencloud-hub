@@ -24,7 +24,7 @@ stream.on('device', function(device) {
   devices[deviceId]['status'] = {}
 
   //console.log('Found', device.info.manufacturer, device.info.modelName, device.info.UDN);//,  device.info);
-  //console.log(device.info); 
+  // console.log(device.info); 
   // console.log('device: %j', device); 
   // console.log('----------------------------------------------'); 
   if (typeof device.apps === 'function') {
@@ -41,6 +41,21 @@ stream.on('device', function(device) {
     device.running(function(err, app){
       console.log('Currently running app for', device.name, app);
     });
+  }
+
+  if(device.info.friendlyName == '42LM7600-TA'){
+    console.log(device.info);
+    var app = device.app('Internet');
+    //var uuid = device.info.UDN.split('uuid')[1]; 
+    app.info(function(err, resp) {
+      if (err) console.log('error calling info', err);
+      console.log('Info on', resp);
+    });
+    app.start("http://www.google.com", function(err) {
+      if (err) console.log('error starting', err);
+      console.log('Started on', device.name);
+    });
+
   }
 
   // if(device.info.manufacturer == 'Smart TV Alliance'){

@@ -48,8 +48,12 @@ function scanDevice()
 // appId: 765FFE19 | ScreenCould
 function launch(host, appId, no_sleep) {
 
+  console.log("connecting.. ")
+
   var client = new Client();
   client.connect(host, function() {
+
+    console.log("connected!")
 
     var connection = client.createChannel('sender-0', 'receiver-0', 'urn:x-cast:com.google.cast.tp.connection', 'JSON');
     var receiver   = client.createChannel('sender-0', 'receiver-0', 'urn:x-cast:com.google.cast.receiver', 'JSON');
@@ -70,15 +74,14 @@ function launch(host, appId, no_sleep) {
     // receiver.send({ type: 'SET_VOLUME', volume: { level: 1 }, requestId: 11111 });
     // receiver.send({ type: 'SET_VOLUME', volume: { muted: true }, requestId: 22222 });
 
-    // receiver.send({ type: 'LAUNCH', appId: appId, requestId: 111});
-    receiver.send({ type: 'STOP', sessionId: 'CA3CF588-062E-7F18-CCC7-A376365787EF', requestId: 222});
+    receiver.send({ type: 'LAUNCH', appId: appId, requestId: 111});
+    // receiver.send({ type: 'STOP', sessionId: 'CA3CF588-062E-7F18-CCC7-A376365787EF', requestId: 222});
 
     // receiver.send({ type: 'GET_STATUS', requestId: 555});
     // receiver.send({ type: 'GET_APP_AVAILABILITY', appId: [ appId ], requestId: 666});
     
 
-    
-
+  
     //display receiver status updates
     receiver.on('message', function(data, broadcast) {
 
@@ -95,7 +98,13 @@ function launch(host, appId, no_sleep) {
 }
 
 scanDevice();
-launch('192.168.10.24', '765FFE19', true);
+
+setTimeout(function(){
+
+launch('192.168.10.11', '8AE1FC77', true);
+
+}, 3000);
+
 
 module.exports.scan = scanDevice; 
 module.exports.launch = launch; 
