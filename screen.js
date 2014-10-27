@@ -1,6 +1,6 @@
 var Client = require('castv2').Client;
 var mdns = require('mdns');
-var _ = require('lodash'); 
+var _ = require('lodash');
 
 var homeId = '00000000-0000-0000-0000-000000000000'; 
 var appId = '765FFE19'; 

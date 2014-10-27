@@ -3,11 +3,15 @@
 var nodecast = require('nodecast');
 var stream = nodecast.find();
 var md5 = require('MD5');
+var Firebase = require('firebase');
+var util = require('util');
 
 // console.log('+++++++++++++++++++++++++++++++++++++++++++++');
 
 var _devices = {}
 var devices = {}
+
+var devicesRoot = new Firebase('https://screencloud.firebaseio.com/devices');
 
 stream.on('device', function(device) {
 	// device.name, 
@@ -22,6 +26,9 @@ stream.on('device', function(device) {
   devices[deviceId]['info']['address'] = device.address
   devices[deviceId]['info']['name'] = device.name
   devices[deviceId]['status'] = {}
+
+  console.log('update dial!!!!', util.inspect(devices[deviceId], false, null));
+  devicesRoot.child(deviceId).update(devices[deviceId]); 
 
   //console.log('Found', device.info.manufacturer, device.info.modelName, device.info.UDN);//,  device.info);
   // console.log(device.info); 
@@ -85,6 +92,18 @@ stream.on('device', function(device) {
 
   // }
 
+});
+
+stream.on('update', function(closeReason, description) {
+  console.log("---------------update--------------");
+});
+
+stream.on('close', function(closeReason, description) {
+  console.log("Closed ReceiverChannel");
+});
+
+stream.on('message', function(message) {
+  console.log("Message " + message);
 });
 
 var startApp = function(deviceId, appId, params, callback){

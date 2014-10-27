@@ -1,7 +1,8 @@
 
 _ = require('lodash')
 chromecast = require('./chromecast')
-dial = require('./dial')
+# dial = require('./dial')
+dial = require('./dial2')
 
 listDevices = ->
   castDevices = _.values(chromecast.devices)

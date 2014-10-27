@@ -1,4 +1,6 @@
 var nodecastor = require('nodecastor');
+var Firebase = require('firebase');
+var util = require('util');
 var _ = require('lodash'); 
 // var logger = = require('./logger'); 
 var logger = require('winston');
@@ -13,7 +15,9 @@ var appNS = 'urn:x-cast:io.screencloud.cast.player';
 var dump = function(obj){return util.inspect(obj, false, null); };
 
 var devices = {};
-var _devices = {}; 
+var _devices = {};
+
+var devicesRoot = new Firebase('https://screencloud.firebaseio.com/devices');
 
 // dashkioskNs = 'urn:x-cast:com.deezer.cast.dashkiosk';
 
@@ -61,13 +65,17 @@ function checkStatus(device) {
     logger.info('adding device with id: '+ device.id)
     devices[device.id]['status'] = status;
 
-    // update(device, status);
+    update(device, status);
     // startApp(device, appId, appNS); 
   });
 }
 
 function update(device, status){
-	logger.info('Update '+device+' status ', status); 
+	// logger.info('Update '+device+' status ', status);
+
+  console.log('update!!!!', util.inspect(devices, false, null));
+  var deviceInfo = devices[device.id]['info']; 
+  devicesRoot.child(device.id).update({info:deviceInfo, status:status}); 
 }
 
 scanner
